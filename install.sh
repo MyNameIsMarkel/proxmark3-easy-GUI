@@ -77,25 +77,19 @@ update-desktop-database -q "$APPS_DIR" 2>/dev/null || true
 ok "Entrada de menú instalada."
 
 # ----------------------------------------------------- Acceso directo en el Escritorio
-# Carpeta del Escritorio. xdg-user-dir puede devolver una ruta en inglés
-# (/root/Desktop) o inexistente aunque la carpeta real sea "Escritorio",
-# así que elegimos la PRIMERA carpeta localizada que exista de verdad.
-XDG_DESKTOP="$(xdg-user-dir DESKTOP 2>/dev/null || true)"
-DESKTOP_DIR=""
-for cand in "$HOME/Escritorio" "$XDG_DESKTOP" "$HOME/Desktop"; do
-    if [[ -n "$cand" && "$cand" != "$HOME" && -d "$cand" ]]; then
-        DESKTOP_DIR="$cand"; break
+# Carpeta del Escritorio.
+# Prioridad: variable DESKTOP_DIR (si la pasas tú) > Escritorio existente >
+# Desktop existente > se crea Escritorio.
+# No usamos xdg-user-dir: en cuentas sin configurar devuelve "Desktop" aunque
+# tu escritorio real se llame "Escritorio". Para forzar otra ruta:
+#     DESKTOP_DIR=/ruta/a/tu/escritorio ./install.sh
+if [[ -z "${DESKTOP_DIR:-}" ]]; then
+    if   [[ -d "$HOME/Escritorio" ]]; then DESKTOP_DIR="$HOME/Escritorio"
+    elif [[ -d "$HOME/Desktop" ]];    then DESKTOP_DIR="$HOME/Desktop"
+    else DESKTOP_DIR="$HOME/Escritorio"
     fi
-done
-# Si no existe ninguna, créala (la de xdg si es válida; si no, Escritorio).
-if [[ -z "$DESKTOP_DIR" ]]; then
-    if [[ -n "$XDG_DESKTOP" && "$XDG_DESKTOP" != "$HOME" ]]; then
-        DESKTOP_DIR="$XDG_DESKTOP"
-    else
-        DESKTOP_DIR="$HOME/Escritorio"
-    fi
-    mkdir -p "$DESKTOP_DIR"
 fi
+mkdir -p "$DESKTOP_DIR"
 DESK_FILE="$DESKTOP_DIR/$APP_ID.desktop"
 build_desktop "$DESK_FILE"
 # Marcar como confiable para que GNOME/otros muestren el icono y no una advertencia.
