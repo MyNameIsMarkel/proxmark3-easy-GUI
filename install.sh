@@ -78,12 +78,16 @@ ok "Entrada de menú instalada."
 
 # ----------------------------------------------------- Acceso directo en el Escritorio
 DESKTOP_DIR="$(xdg-user-dir DESKTOP 2>/dev/null || true)"
-if [[ -z "$DESKTOP_DIR" || "$DESKTOP_DIR" == "$HOME" ]]; then
+# xdg-user-dir puede devolver una ruta que aún no existe en disco (p. ej.
+# /root/Desktop): por eso comprobamos también que sea un directorio real.
+if [[ -z "$DESKTOP_DIR" || "$DESKTOP_DIR" == "$HOME" || ! -d "$DESKTOP_DIR" ]]; then
     if   [[ -d "$HOME/Escritorio" ]]; then DESKTOP_DIR="$HOME/Escritorio"
     elif [[ -d "$HOME/Desktop" ]];    then DESKTOP_DIR="$HOME/Desktop"
-    else DESKTOP_DIR="$HOME/Desktop"; mkdir -p "$DESKTOP_DIR"
+    else DESKTOP_DIR="$HOME/Desktop"
     fi
 fi
+# Garantiza que la carpeta existe antes de escribir el acceso directo.
+mkdir -p "$DESKTOP_DIR"
 DESK_FILE="$DESKTOP_DIR/$APP_ID.desktop"
 build_desktop "$DESK_FILE"
 # Marcar como confiable para que GNOME/otros muestren el icono y no una advertencia.
