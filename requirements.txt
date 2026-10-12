@@ -1,0 +1,4 @@
+# Dependencia de la interfaz gráfica.
+# En Kali se recomienda instalarla por apt:  sudo apt install python3-pyqt5
+# Alternativa por pip (lo hace install.sh en un venv si hace falta):
+PyQt5>=5.15
