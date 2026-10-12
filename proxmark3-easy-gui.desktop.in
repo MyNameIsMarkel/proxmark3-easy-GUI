@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Proxmark3 Easy GUI
+GenericName=RFID / Proxmark3
+Comment=Interfaz gráfica para el cliente pm3 (firmware Iceman)
+Exec=__EXEC__
+Icon=__ICON__
+Terminal=false
+Categories=Utility;Security;System;
+Keywords=proxmark;rfid;nfc;iceman;pm3;
+StartupNotify=true
