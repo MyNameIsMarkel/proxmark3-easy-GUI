@@ -77,17 +77,25 @@ update-desktop-database -q "$APPS_DIR" 2>/dev/null || true
 ok "Entrada de menú instalada."
 
 # ----------------------------------------------------- Acceso directo en el Escritorio
-DESKTOP_DIR="$(xdg-user-dir DESKTOP 2>/dev/null || true)"
-# xdg-user-dir puede devolver una ruta que aún no existe en disco (p. ej.
-# /root/Desktop): por eso comprobamos también que sea un directorio real.
-if [[ -z "$DESKTOP_DIR" || "$DESKTOP_DIR" == "$HOME" || ! -d "$DESKTOP_DIR" ]]; then
-    if   [[ -d "$HOME/Escritorio" ]]; then DESKTOP_DIR="$HOME/Escritorio"
-    elif [[ -d "$HOME/Desktop" ]];    then DESKTOP_DIR="$HOME/Desktop"
-    else DESKTOP_DIR="$HOME/Desktop"
+# Carpeta del Escritorio. xdg-user-dir puede devolver una ruta en inglés
+# (/root/Desktop) o inexistente aunque la carpeta real sea "Escritorio",
+# así que elegimos la PRIMERA carpeta localizada que exista de verdad.
+XDG_DESKTOP="$(xdg-user-dir DESKTOP 2>/dev/null || true)"
+DESKTOP_DIR=""
+for cand in "$HOME/Escritorio" "$XDG_DESKTOP" "$HOME/Desktop"; do
+    if [[ -n "$cand" && "$cand" != "$HOME" && -d "$cand" ]]; then
+        DESKTOP_DIR="$cand"; break
     fi
+done
+# Si no existe ninguna, créala (la de xdg si es válida; si no, Escritorio).
+if [[ -z "$DESKTOP_DIR" ]]; then
+    if [[ -n "$XDG_DESKTOP" && "$XDG_DESKTOP" != "$HOME" ]]; then
+        DESKTOP_DIR="$XDG_DESKTOP"
+    else
+        DESKTOP_DIR="$HOME/Escritorio"
+    fi
+    mkdir -p "$DESKTOP_DIR"
 fi
-# Garantiza que la carpeta existe antes de escribir el acceso directo.
-mkdir -p "$DESKTOP_DIR"
 DESK_FILE="$DESKTOP_DIR/$APP_ID.desktop"
 build_desktop "$DESK_FILE"
 # Marcar como confiable para que GNOME/otros muestren el icono y no una advertencia.
