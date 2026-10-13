@@ -1,19 +1,19 @@
 """Hoja de estilo (QSS) para un aspecto oscuro y limpio."""
 
-# Paleta
-BG = "#0f1419"          # fondo general
-PANEL = "#171d26"       # paneles
-PANEL_2 = "#1e2631"     # elementos elevados
-BORDER = "#2b3443"
-TEXT = "#e6edf3"
-MUTED = "#8b98a9"
-ACCENT = "#16c79a"      # verde-teal (motivo RFID)
-ACCENT_DK = "#0fa07c"
-CONSOLE_BG = "#0a0e13"
-CONSOLE_TEXT = "#c8f7e4"
-OK = "#16c79a"
-BAD = "#ef5350"
-WARN = "#f5a623"
+# Paleta (azul como color principal; el resto armoniza con él)
+BG = "#0e141d"          # fondo general (azul muy oscuro)
+PANEL = "#151d2a"       # paneles
+PANEL_2 = "#1c2736"     # elementos elevados
+BORDER = "#2a3850"
+TEXT = "#e8eef7"
+MUTED = "#8a99b3"
+ACCENT = "#3d8bfd"      # azul principal
+ACCENT_DK = "#2f72d8"
+CONSOLE_BG = "#0a0f17"
+CONSOLE_TEXT = "#bcd6ff"  # azul claro para la consola
+OK = "#3d8bfd"          # "conectado" en el azul principal
+BAD = "#ef5f5f"         # error (rojo cálido que combina con el azul)
+WARN = "#f0a63a"        # aviso (ámbar)
 
 STYLESHEET = f"""
 * {{
@@ -82,13 +82,13 @@ QPushButton:disabled {{
 /* Botón primario (Ejecutar) */
 QPushButton#primary {{
     background: {ACCENT};
-    color: #07130f;
+    color: #06101f;
     font-weight: 700;
     border: none;
     text-align: center;
 }}
 QPushButton#primary:hover {{ background: {ACCENT_DK}; }}
-QPushButton#primary:disabled {{ background: #2b4b41; color: #6f8a81; }}
+QPushButton#primary:disabled {{ background: #26374f; color: #71839e; }}
 
 QPushButton#danger {{
     background: transparent;
