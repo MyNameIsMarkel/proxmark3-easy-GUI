@@ -1,19 +1,19 @@
 """Hoja de estilo (QSS) para un aspecto oscuro y limpio."""
 
 # Paleta (azul como color principal; el resto armoniza con él)
-BG = "#0e141d"          # fondo general (azul muy oscuro)
-PANEL = "#151d2a"       # paneles
-PANEL_2 = "#1c2736"     # elementos elevados
-BORDER = "#2a3850"
-TEXT = "#e8eef7"
-MUTED = "#8a99b3"
-ACCENT = "#3d8bfd"      # azul principal
-ACCENT_DK = "#2f72d8"
-CONSOLE_BG = "#0a0f17"
-CONSOLE_TEXT = "#bcd6ff"  # azul claro para la consola
-OK = "#3d8bfd"          # "conectado" en el azul principal
-BAD = "#ef5f5f"         # error (rojo cálido que combina con el azul)
-WARN = "#f0a63a"        # aviso (ámbar)
+BG = "#000000"          # fondo general (azul muy oscuro)
+PANEL = "#0c0c0c"       # paneles
+PANEL_2 = "#161616"     # elementos elevados
+BORDER = "#2b2b2b"
+TEXT = "#f4f4f4"
+MUTED = "#8c8c8c"
+ACCENT = "#ffffff"      # azul principal
+ACCENT_DK = "#cccccc"
+CONSOLE_BG = "#000000"
+CONSOLE_TEXT = "#e8e8e8"  # azul claro para la consola
+OK = "#ffffff"          # "conectado" en el azul principal
+BAD = "#d7d7d7"         # error (rojo cálido que combina con el azul)
+WARN = "#a8a8a8"        # aviso (ámbar)
 
 STYLESHEET = f"""
 * {{
@@ -68,10 +68,10 @@ QPushButton {{
 }}
 QPushButton:hover {{
     border-color: {ACCENT};
-    background: #233041;
+    background: #2e2e2e;
 }}
 QPushButton:pressed {{
-    background: #2a3a4d;
+    background: #373737;
 }}
 QPushButton:disabled {{
     color: {MUTED};
@@ -82,13 +82,13 @@ QPushButton:disabled {{
 /* Botón primario (Ejecutar) */
 QPushButton#primary {{
     background: {ACCENT};
-    color: #06101f;
+    color: #0f0f0f;
     font-weight: 700;
     border: none;
     text-align: center;
 }}
 QPushButton#primary:hover {{ background: {ACCENT_DK}; }}
-QPushButton#primary:disabled {{ background: #26374f; color: #71839e; }}
+QPushButton#primary:disabled {{ background: #353535; color: #818181; }}
 
 QPushButton#danger {{
     background: transparent;
@@ -96,7 +96,7 @@ QPushButton#danger {{
     color: {BAD};
     text-align: center;
 }}
-QPushButton#danger:hover {{ background: rgba(239,83,80,0.12); }}
+QPushButton#danger:hover {{ background: rgba(129, 129, 129,0.12); }}
 
 /* Consola */
 QPlainTextEdit#console {{
